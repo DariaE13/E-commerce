@@ -4,6 +4,7 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=255,unique=True, verbose_name='Название категории')
     slug = models.SlugField(max_length=255, unique=True, help_text='Используется для URL, например "videokarty"')
+    image = models.ImageField(upload_to='categories/%Y/%m/%d', blank=True, verbose_name='Изображение категории')
 
     class Meta:
         # Настройки для отображения в админ-панели
@@ -16,7 +17,7 @@ class Category(models.Model):
     
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='product',verbose_name='Категория')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products',verbose_name='Категория')
     name = models.CharField(max_length=255,unique=True, verbose_name='Название товара')
     slug = models.SlugField(max_length=255, unique=True, help_text='Используется для URL, например "videokarty"')
     description = models.TextField(blank=True, verbose_name='Описание')
