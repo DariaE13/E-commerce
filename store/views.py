@@ -23,5 +23,9 @@ def category_list(request):
     return render(request,'store/category_list.html',context)
 
 def product_list_by_category(request,category_slug):
-    return render(request,'store/product_list_by_category.html')
+    category = get_object_or_404(Category,slug = category_slug)
+    products = Product.objects.filter(category = category,is_available =True)
+    context = {"category": category,"products":products}
+    return render(request,'store/product_list_by_category.html',context)
 # get_object_or_404 только для конкретных объектов(товаров)
+
