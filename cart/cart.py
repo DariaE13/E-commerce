@@ -39,19 +39,19 @@ class Cart:
             item_copy = item.copy() # Копия данных о товаров (поверхностное копирование только по 1 вложенности словаря)
             item_copy['product'] = products.get(int(product_id))
             item_copy['price'] = Decimal(item_copy['price'])
-            item_copy['total_price'] = item_copy['price'] * item_copy['quantiti']
+            item_copy['total_price'] = item_copy['price'] * item_copy['quantity']
             yield item_copy # Обрабатывает товары поэтапно
 
     def __len__(self):
-        total_quantiti = 0
+        total_quantity = 0
         for item in self.cart.values():
-            total_quantiti += item['quantiti']
-        return total_quantiti
+            total_quantity += item['quantity']
+        return total_quantity
     
-    # return sum(item['quantiti'] for item in self.cart.values()) #Код в одну линию
+    # return sum(item['quantity'] for item in self.cart.values()) #Код в одну линию
 
     def get_total_price(self):
-        return sum(Decimal(item['price']) * item['quantiti'] for item in self.cart.values())
+        return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
     
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
